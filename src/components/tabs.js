@@ -1,4 +1,14 @@
+import axios from "axios"
+
 const Tabs = (topics) => {
+  const topic = document.createElement('div')
+  topics.forEach(element => {
+    let newTab = document.createElement('div')
+    newTab.classList.add('tab')
+    newTab.textContent = `${element}`
+    topic.appendChild(newTab)
+  })
+    return topic;
   // TASK 3
   // ---------------------
   // Implement this function which takes an array of strings ("topics") as its only argument.
@@ -15,7 +25,18 @@ const Tabs = (topics) => {
   //
 }
 
+
+
 const tabsAppender = (selector) => {
+  axios.get('http://localhost:5000/api/topics')
+    .then(res => {
+      let newArray = res.data.topics;
+      let tabGroup = Tabs(newArray);
+      const newObj = document.querySelector(`${selector}`);
+      newObj.appendChild(tabGroup);
+      console.log(newArray)
+      return newObj;
+      })
   // TASK 4
   // ---------------------
   // Implement this function which takes a css selector as its only argument.
